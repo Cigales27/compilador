@@ -8,20 +8,31 @@ document.addEventListener('DOMContentLoaded', function ()
         let texto = []
         const letras = /[a-zA-Z]/
         const numeros = /[0-9]/
-        const palabrasReservadas = ["for", "while", "do", "document", "appendChild", "addEventListener"]
+        const palabrasReservadas = "for,while", "do", "document", "appendChild", "addEventListener"
 
+        var buscador = textoEntrada.split(" ");
+        if (buscador == palabrasReservadas)
+        {
+            console.log(buscador);
+        }
         for (const caracter of textoEntrada)
         {
             if (letras.test(caracter))
             {
                 const add = document.createElement('p')
+                add.style.color = `#FFFFFF`
                 textoConclusion.appendChild(add)
                 var newContent = document.createTextNode(`${caracter} es letra`);
                 add.appendChild(newContent)
 
             }else
             {
-                add.appendChild(`${caracter} no es letra`)
+                const add = document.createElement('p')
+                add.style.color = `#FFFFFF`
+
+                textoConclusion.appendChild(add)
+                var newContent = document.createTextNode(`${caracter} no es letra`);
+                add.appendChild(newContent)
             }
             texto.push(caracter)
         }
