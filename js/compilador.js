@@ -6,7 +6,11 @@ document.addEventListener('DOMContentLoaded', function () {
         let texto = []
         const letras = /[a-zA-Z]/
         const numeros = /[0-9]/
-        const palabrasReservadas = ["for", "while", "do", "document", "appendChild", "addEventListener", "if"]
+        const palabrasReservadas = ["const", "let", "var","for","while", "do", "document", "appendChild", "addEventListener", "if"]
+        const operadoresMatematicos = ["+", "-", "*", "/"]
+        const operadoresLogicos = ["<", ">", "<=", ">=", "==", "!=", "&&", "||", "!"]
+        const operadoresAsignacion = ["++", "--", "=", "*=", "/=", "+=", "-=", "%="]
+
 
         var buscador = textoEntrada.split(" ");
         for (var i = 0; i < palabrasReservadas.length; i++)

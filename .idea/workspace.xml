@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8115ae41-d4b8-4f1d-bd4a-5efe7b30ca9c" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/js/compilador.js" beforeDir="false" afterPath="$PROJECT_DIR$/js/compilador.js" afterDir="false" />
     </list>
@@ -47,6 +46,8 @@
       <updated>1616118035170</updated>
       <workItem from="1616118036753" duration="623000" />
       <workItem from="1616287618266" duration="1848000" />
+      <workItem from="1616393549337" duration="473000" />
+      <workItem from="1616394148271" duration="647000" />
     </task>
     <servers />
   </component>
