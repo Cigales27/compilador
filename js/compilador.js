@@ -1,76 +1,124 @@
 document.addEventListener('DOMContentLoaded', function () {
-    const ejecutar = document.getElementById("ejecutar");
+
+    const ejecutar = document.getElementById("ejecutar")
     ejecutar.onclick = function () {
-        let textoEntrada = document.getElementById("entrada").value;
-        let textoConclusion = document.getElementById("mostrador");
+        var mos = document.getElementById("tabla")
+        mos.classList.remove("ocultar")
+        let textoEntrada = document.getElementById("entrada").value
+        let textoConclusion = document.getElementById("mostrador")
+        let tabla = document.getElementById("contenidoTabla")
         let texto = []
-        const letras = /[a-zA-Z]/
+        const letras = /[a-zA-Z0-9]/
         const numeros = /[0-9]/
-        const saltoLinea = "\n"
-        const palabrasReservadas = ["const", "let", "var", "for", "while", "do", "document", "appendChild", "addEventListener", "if"]
+        const signos = /[\{\}\[\]\(\)]/
+        const operadores = /[\=\<\>\*\+\-]/g
+        const saltoLinea = /\n\t/g
+        const forCiclo = /[for\;\;\+\+]/
+        var llaves = []
+        var corchetes = []
+        const palabrasReservadas = ["const", "let", "var", "for", "while", "do", "document", "appendChild", "addEventListener", "if", "replace"]
         const operadoresMatematicos = ["+", "-", "*", "/"]
         const operadoresLogicos = ["<", ">", "<=", ">=", "==", "!=", "&&", "||", "!"]
         const operadoresAsignacion = ["++", "--", "=", "*=", "/=", "+=", "-=", "%="]
 
         textoEntrada = textoEntrada.replace(/\n/g, " ")
-        //if (textoEntrada.test(saltoLinea))
-        var buscador = textoEntrada.split(" ");
+        textoEntrada = textoEntrada.replace(/\t/g, " ")
+
+        var buscador = textoEntrada.split(" ")
 
         for (var i = 0; i < buscador.length; i++) {
-            switch (buscador[i].test) {
-                case (letras):
+            switch (true) {
+                case numeros.test(buscador[i]):
+                    agregarFila(buscador[i], "numero")
+                    break
+
+                case signos.test(buscador[i]):
+                    agregarFila(buscador[i], "signo")
+                    if (buscador[i] == "{" ||buscador[i] == "}") verificarLlave(buscador[i])
+                    if (buscador[i] == "("||buscador[i] == ")") verificarParentesis(buscador[i])
+                    break
+
+                case letras.test(buscador[i]):
                     for (var t = 0; t < palabrasReservadas.length; t++) {
                         var final = (palabrasReservadas.length) - 1
                         if (buscador[i] == palabrasReservadas[t]) {
-                            agregarEtiqueta(buscador[i], "palabra reservada")
+                            agregarFila(buscador[i], "palabra reservada ")
                             t = final
                         } else {
-                            var final = (palabrasReservadas.length) - 1
                             if (t == final) {
-                                agregarEtiqueta(buscador[i], "palabra")
-                                t = final
+                                if (operadores.test(buscador[i+1]))
+                                {
+                                    agregarEtiqueta(buscador[i], "sin asignacion", "yellow")
+                                }
+                                agregarFila(buscador[i], "variable ")
                             }
                         }
                     }
                     break
 
-                case (numeros):
-                    agregarEtiqueta(buscador[i], "numero")
+                case operadores.test(buscador[i]):
+                    agregarFila(buscador[i], "operador ")
                     break
 
                 default:
-                    agregarEtiqueta(buscador[i], "error")
+                    agregarFila(buscador[i], "signo de puntuacion")
             }
+        }
 
-            // for (var t = 0; t < buscador.length; t++) {
-            //
-            // }
+        function verificarLlave(llave) {
+            if (llave == "{") {
+                llaves.push(llave)
+            }
+            if (llave == "}") {
+                if (llaves.length==0) {
+                    agregarEtiqueta("{}", "error", "red")
+                }
+                llaves.pop("}")
+            }
+        }
+
+        function verificarParentesis(llave) {
+            if (llave == "(") {
+                corchetes.push(llave)
+            }
+            if (llave == ")") {
+                if (corchetes.length==0) {
+                    agregarEtiqueta("()", "error", "red")
+                }
+                corchetes.pop(llave)
+            }
+        }
+
+        function agregarFila(lexema, token)
+        {
+            const add = document.createElement("tr")
+            tabla.appendChild(add)
+            const contLexema = document.createElement("td")
+            add.appendChild(contLexema)
+            const contToken = document.createElement("td")
+            add.appendChild(contToken)
+            var newContent = document.createTextNode(lexema)
+            var newcontent = document.createTextNode(token)
+            contLexema.appendChild(newContent)
+            contToken.appendChild(newcontent)
+
 
         }
 
-        function agregarEtiqueta(numero, tipo) {
+        function agregarEtiqueta(numero, tipo, color) {
             const add = document.createElement('p')
-            add.style.color = `#FFFFFF`
+            add.style.color = `${color}`
             textoConclusion.appendChild(add)
             var newContent = document.createTextNode(`${numero} es \t${tipo}`);
             add.appendChild(newContent)
         }
 
-        // for (const caracter of textoEntrada) {
-        //     if (letras.test(caracter)) {
-        //         const add = document.createElement('p')
-        //         add.style.color = `#FFFFFF`
-        //         textoConclusion.appendChild(add)
-        //         var newContent = document.createTextNode(`${caracter} es letra`);
-        //         add.appendChild(newContent)
-        //     } else {
-        //         const add = document.createElement('p')
-        //         add.style.color = `#FFFFFF`
-        //         textoConclusion.appendChild(add)
-        //         var newContent = document.createTextNode(`${caracter} no es letra`);
-        //         add.appendChild(newContent)
-        //     }
-        //     texto.push(caracter)
-        // }
+        if (llaves.length != 0) {
+            agregarEtiqueta("{", "error", "red")
+        }
+
+        if (corchetes.length != 0) {
+            agregarEtiqueta("(", "error", "red")
+        }
     }
 })

@@ -8,6 +8,13 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="assets/css/styles.min.css">
+
+    <style>
+        .ocultar
+        {
+            display: none;
+        }
+    </style>
 </head>
 
 <body>
@@ -31,6 +38,9 @@
     </div>
 </nav>
 <div class="container">
+
+
+
     <div class="row">
         <div class="col" style="border: 1px solid #5d8bd0;">
         <textarea class="form-control-plaintext" cols="30" rows="10"
@@ -41,7 +51,21 @@
 
 </div>
 <footer>
-    <div id="mostrador" style="background: #37434d;"></div>
+
+    <table class="table ocultar" id="tabla">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">Lexema</th>
+            <th scope="col">Tokens</th>
+        </tr>
+        </thead>
+        <tbody id="contenidoTabla">
+
+        </tbody>
+    </table>
+    <div id="mostrador" style="background: #37434d;" class="container">
+
+    </div>
 
 </footer>
 
